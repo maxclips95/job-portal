@@ -1,0 +1,31 @@
+# Cursor Rules - Job Portal Resume
+
+## Objective
+Continue this project in strict sequence until production readiness, with no drift.
+
+## Mandatory Startup Steps
+1. Read `phase-progress/BLUEPRINT_PRODUCTION_SEQUENCE_2026-02-09.md`.
+2. Read `AGENT_HANDOFF.md`.
+3. Resume from the exact step marked in the sequence file.
+
+## Execution Rules
+- Follow `S1 -> S7` in order. Do not jump steps.
+- Update `phase-progress/BLUEPRINT_PRODUCTION_SEQUENCE_2026-02-09.md` after each completed step.
+- Keep changes deployment-agnostic in current phase (no Docker/K8s dependency).
+- Do not revert unrelated existing edits.
+- Prefer minimal, testable patches.
+
+## Current Required Resume Point
+- Start at `S4` (frontend production build gate and route/data parity).
+- `S1`, `S2`, `S3` are completed.
+
+## Verification Commands
+- `npm run local:status`
+- `npm run build --prefix=backend`
+- `npm run build --prefix=frontend`
+- `npm run local:start`
+- `npm run local:stop`
+
+## If Blocked
+- Record blocker + exact command output summary in sequence file.
+- Add precise next action and stop.

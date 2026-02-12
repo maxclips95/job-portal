@@ -1,0 +1,56 @@
+{
+  "name": "job-portal-monorepo",
+  "version": "1.0.0",
+  "description": "Modern Job Portal - 51,480 LOC | 150+ Features | Production Ready",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "scripts": {
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "frontend:dev": "cd frontend && npm run dev",
+    "build": "npm run build --prefix=backend && npm run build --prefix=frontend",
+    "build:prod": "npm run build:prod --prefix=backend && npm run build --prefix=frontend",
+    "start": "npm run start --prefix=backend",
+    "start:frontend": "npm run start --prefix=frontend",
+    "migrate": "npm run migrate --prefix=backend",
+    "test": "npm run test --prefix=backend && npm run test --prefix=frontend",
+    "test:coverage": "npm run test:coverage --prefix=backend && npm run test:coverage --prefix=frontend",
+    "lint": "npm run lint --prefix=backend && npm run lint --prefix=frontend",
+    "typecheck": "npm run typecheck --prefix=backend && npm run type-check --prefix=frontend",
+    "deploy": "bash scripts/deploy.sh",
+    "health-check": "npm run health-check --prefix=backend",
+    "local:start": "powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1 -NoWait",
+    "local:start:wait": "powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1",
+    "local:start:dev": "powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1 -Dev -NoWait",
+    "local:stop": "powershell -ExecutionPolicy Bypass -File scripts/stop-local.ps1",
+    "local:status": "powershell -ExecutionPolicy Bypass -File scripts/status-local.ps1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "job-portal",
+    "recruitment",
+    "job-board",
+    "hiring",
+    "talent",
+    "career",
+    "full-stack",
+    "production"
+  ],
+  "author": "Job Portal Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourname/job-portal.git"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ]
+}

@@ -1,0 +1,100 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16
+    container_name: job_portal_db
+    environment:
+      POSTGRES_DB: job_portal
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - job_portal_network
+
+  # Redis Cache
+  redis:
+    image: redis:7
+    container_name: job_portal_cache
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - job_portal_network
+
+  # Backend API
+  backend:
+    image: job_portal_backend:latest
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    container_name: job_portal_api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      DATABASE_URL: postgresql://postgres:postgres_password@postgres:5432/job_portal
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: job_portal
+      DB_USER: postgres
+      DB_PASSWORD: postgres_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      FRONTEND_URL: http://localhost:3000
+      APP_URL: http://localhost:3000
+      CORS_ORIGIN: http://localhost:3000
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      REFRESH_TOKEN_SECRET: your-super-secret-refresh-token-change-in-production
+      ADMIN_EMAIL: admin@jobportal.com
+      ADMIN_PASSWORD: MySecure@Pass2026
+    ports:
+      - "5000:5000"
+    command: sh -c "node dist/database/migrate.js && npm start"
+    networks:
+      - job_portal_network
+
+  # Frontend App
+  frontend:
+    image: job_portal_frontend:latest
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    container_name: job_portal_web
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:5000
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+    ports:
+      - "3000:3000"
+    networks:
+      - job_portal_network
+
+volumes:
+  postgres_data:
+    name: job_portal_postgres_data
+  redis_data:
+    name: job_portal_redis_data
+
+networks:
+  job_portal_network:
+    name: job_portal_network
+    driver: bridge

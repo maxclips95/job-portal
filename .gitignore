@@ -1,0 +1,121 @@
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Dependencies
+node_modules/
+yarn.lock
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+.env.production.local
+.env.production
+.env.staging
+.env.development
+
+# IDE & Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vs/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Build Output
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Next.js
+.next/
+.nextjs/
+.vercel/
+
+# TypeScript
+*.tsbuildinfo
+.typescript/
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+test-results/
+junit.xml
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Kubernetes
+kubeconfig
+*.pem
+*.key
+
+# Database
+*.sqlite
+*.sqlite3
+db.lock
+
+# Cache
+.eslintcache
+.cache/
+.parcel-cache
+.eslintignore
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+
+# OS Files
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# PM2
+ecosystem.config.js.local
+logs/pm2/
+
+# Error Logs
+error_log
+error.log
+
+# Build artifacts
+backend/dist/
+frontend/.next/
+frontend/out/
+
+# Performance
+*.perf
+.lighthouse/
+
+# Security
+.env.vault
+
+# Phase Progress Files (archived)
+phase-progress/
+
+# Local PostgreSQL binary dumps
+pglocal/
